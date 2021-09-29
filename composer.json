@@ -1,0 +1,20 @@
+{
+    "name": "acs/ping-pong",
+    "autoload": {
+        "psr-4": {
+        "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "green68",
+            "email": "eric.vercheval@hotmail.fr"
+        }
+    ],
+    "require":{
+
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.3"
+    }
+}
