@@ -7,23 +7,15 @@ use Exception;
 class Game
 {
     private string $id;
-    private bool $starting = false;
-    private int $gameSetPlaying = -1;
     private array $players = array();
     private array $gameSets = array();
-    // private array $scores = array();
-
     
     public function __construct(
         private int $numberOfGameSets, 
         private int $numberOfPlayers
     ) 
     {
-        // $this->id = spl_object_id($this);
         $this->id = uniqid("game-");
-        for ($i=0; $i < $this->numberOfGameSets; $i++) { 
-            $this->gameSets[] = new GameSet($this->getId());
-        }
     }
         
     public function getId(): string
@@ -31,38 +23,22 @@ class Game
         return $this->id;
     }
     
-    public function isStarting(): bool
-    {
-        return $this->starting;
-    }
-
-    public function setPlayer(int $number, Player $player){
-
-    }
-    
     public function start()
     {
-        if(!$this->isStarting()){
+        if(count($this->gameSets) !== 0){
             throw new Exception("Jeu déjà en cours");
         }
-        if($this->checkNumberOfPlayers() !== 0) {
+        if(!$this->isNumberOfPlayers()) {
+            dump($this);
             throw new Exception("démarrage impossible, nombre de joueurs incorrect");
         }
-        $this->starting = true;
+        $this->addGameSet();
     }
-    public function setPlayers(array $playersArray) 
-    {
-        // verif nbre de joueurs
-        if(count($playersArray)!= $this->numberOfPlayers ) {
-            throw new Exception("Nombre de joueurs non conforme doit etre égale à ".$this->numberOfPlayers);
-        }
-        // verif joueur dispo
-        foreach ($playersArray as $player) {
-            if(!$player->isPlaying())            {
-                throw new Exception("joueur {$player->getName()} joue déjà");
-            }
-        }
-        $this->players = $playersArray;
+
+    private function addGameSet() {
+        $this->gameSets[] = new GameSet($this->getId());
+        $gameSetNumber = count($this->gameSets);
+        echo "<br>Set {$gameSetNumber}<br>";
     }
 
     public function addPlayer($player) {
@@ -72,38 +48,23 @@ class Game
 
         $this->players[] = $player;
         $player->setPlaying($this->getId());
-        // $this->scores[] = new Score();       
     }
 
-    public function checkNumberOfPlayers(): int 
+    public function isNumberOfPlayers(): bool 
     {
-        return $this->numberOfPlayers - count($this->players);
+        return $this->numberOfPlayers === count($this->players);
     }
 
-    public function addPointToPlayer(Player $player)
+
+    public function getCurrentSet(): GameSet
     {
-        // control si jeu démarré
-        if($this->isStarting()){
-            throw new Exception("ajout de point impossible, jeu non demarré");
-        }
-
-        // cherche num du joueur
-        $playerNumber = array_search($player, $this->players);
-        $this->addPointToPlayerNum($playerNumber);
-    }
-    
-    
-    public function addPointToPlayerNum(int $playerNumber) {
-        // dump(isset($this->players[$playerNumber]));
-        // control si joueur en jeu
-        if(isset($this->players[$playerNumber]) === false) {
-            throw new Exception("ajout de point impossible");
-        }
-        
-        // TODO : ajout score pour le joueur dans le set en cours
-        // $this->scores[$playerNumber]->addPoint();
-
+        return end($this->gameSets);
     }
 
+
+    public function affiche(){
+        echo "<h1>Game : {$this->getId()}</h1>";
+        echo "<h2></h2>";
+    }
 
 }

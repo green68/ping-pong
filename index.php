@@ -2,51 +2,46 @@
     require 'vendor/autoload.php'; 
     
     use App\Model\Game;
-    use App\Model\Players;
-    
-    $licensed = array(
-        "Adrien",
-        "Eric",
-        "Laurent",
-        "Mathieu",
-        "Said",
-    );
-    
-    $players = new Players($licensed);
-    dump($players);
-    
-    
-    $g1 = new Game(3, 2);
+    use App\Model\Player;
+
+    function randomPlayerNum() {
+        return random_int(0,1);
+    }
+    $NUMBER_OF_SET_WIN = 3;
+    $NUMBER_OF_PLAYERS = 2;
+    $MIN_POINTS_FOR_WINNING = 11;
+
+    $game = new Game($NUMBER_OF_SET_WIN, $NUMBER_OF_PLAYERS);
     echo "création d'un match,";
-    echo " id : ".$g1->getId();
+    echo " id : ".$game->getId();
+
 
     try {
-        echo "<br>nombre de joueur(s) restant : ".$g1->checkNumberOfPlayers();
         // instance joeur1 et affectation à un match
-        $playerOne = $players->getFreePlayer();
-        $g1->addPlayer($playerOne);
-        echo "<br>nombre de joueur(s) restant : ".$g1->checkNumberOfPlayers();
-        
+        $playerOne = new Player("Eric");
+        $playerTwo = new Player("Mathieu");
+        $playerThree = new Player("Saïd");
+
+        $game->addPlayer($playerOne);
         // instance joueur2 et affectation à un match
-        $playerTwo = $players->getFreePlayer();
-        $g1->addPlayer($playerTwo);
-        echo "<br>nombre de joueur(s) restant : ".$g1->checkNumberOfPlayers();
-        
+        $game->addPlayer($playerTwo);
         // instance joueur3 et tentative ajout à un match
-        $playerThree = $players->getFreePlayer();
-        $g1->addPlayer($playerThree);
+        $game->addPlayer($playerThree);
     } catch (\Throwable $th) {
         echo "<br>".$th->getMessage();
     }
 
-    dump($g1);
-
-    // TODO:
     // démarrage match
+    $game->start();
+    $game->affiche();
+    
     // ajout des points
-    // control des sets : si gagnant -> set suivant ou fin match
+    for ($i=0; $i < 11; $i++) { 
+        $game->getCurrentSet()->addPointToPlayerNum(randomPlayerNum());
+    }
+    // $game->getCurrentSet()->addPointToPlayerNum(randomPlayerNum());
 
-    // $g1->addPointToPlayer($playerOne);
-    // dump($g1);
-    // $g1->addPointToPlayerNum(1);
-    // dump($g1);
+    dump($game);
+    
+    // TODO:
+    // control des sets : si gagnant -> set suivant ou fin match

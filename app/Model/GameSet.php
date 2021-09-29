@@ -4,12 +4,14 @@
 
     class GameSet
     {
-        private array $scores = array();
+        private Score $score;
         private string $id;
 
         public function __construct(private string $GameId)
         {
-            $this->id = uniqid("set-");    
+
+            $this->id = uniqid("set-");
+            $this->score = new Score();    
         }
      
         public function getId(): string
@@ -17,7 +19,10 @@
             return $this->id;
         }
 
-        public function addPoint(){
+        public function addPointToPlayerNum(int $playerNumber)
+        {
+            $this->score->addPointToPlayer($playerNumber);
 
         }
+
     }
