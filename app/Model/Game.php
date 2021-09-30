@@ -6,6 +6,10 @@ use Exception;
 
 class Game
 {
+    const MIN_POINTS_FOR_WINNING = 11;
+    const GAP_POINTS = 2;
+    const NUMBER_MIN_SET_WIN = 4;
+
     private string $id;
     private array $players = array();
     private array $gameSets = array();
@@ -29,16 +33,16 @@ class Game
             throw new Exception("Jeu déjà en cours");
         }
         if(!$this->isNumberOfPlayers()) {
-            dump($this);
             throw new Exception("démarrage impossible, nombre de joueurs incorrect");
         }
         $this->addGameSet();
     }
 
-    private function addGameSet() {
+    public function addGameSet() {
+        if($this->isGameWin()) return;
+
         $this->gameSets[] = new GameSet($this->getPayers());
         $gameSetNumber = count($this->gameSets);
-        echo "<br>Set {$gameSetNumber}<br>";
     }
 
     public function addPlayer($player) {
@@ -61,10 +65,27 @@ class Game
         return end($this->gameSets);
     }
 
+    public function getSets(): array
+    {
+        return $this->gameSets;
+    }
 
-    public function affiche(){
-        echo "<h1>Game : {$this->getId()}</h1>";
-        echo "<h2></h2>";
+    public function isGameWin():bool
+    {
+        if(count($this->gameSets) < Game::NUMBER_MIN_SET_WIN) return false;
+        $setsWin = array();
+        foreach($this->gameSets as $set) {
+            if($set->getScore()->getWinner() !== null){
+                 $setsWin[] = $set->getScore()->getWinner()->getName();
+            } 
+        }
+        if(
+            array_count_values($setsWin)[$this->players[0]->getName()] === Game::NUMBER_MIN_SET_WIN
+            || array_count_values($setsWin)[$this->players[1]->getName()] === Game::NUMBER_MIN_SET_WIN
+        ) {
+            return true;
+        }
+        return false;
     }
 
     public function getPayers() {

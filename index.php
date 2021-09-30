@@ -7,11 +7,10 @@
     function randomPlayerNum() {
         return random_int(0,1);
     }
-    $NUMBER_OF_SET_WIN = 3;
-    $NUMBER_OF_PLAYERS = 2;
-    $MIN_POINTS_FOR_WINNING = 11;
 
-    $game = new Game($NUMBER_OF_SET_WIN, $NUMBER_OF_PLAYERS);
+    const NUMBER_OF_PLAYERS = 2;
+
+    $game = new Game(Game::NUMBER_MIN_SET_WIN, NUMBER_OF_PLAYERS);
     echo "création d'un match,";
     echo " id : ".$game->getId();
 
@@ -32,17 +31,28 @@
     }
 
     // démarrage match
+    echo "<h1>Game : {$game->getId()}</h1>";
     $game->start();
-    $game->affiche();
+    echo "<h2>Set : " . count($game->getSets()) . "</h2>";
     
     // ajout des points
-    for ($i=0; $i < 22; $i++) { 
+    // for ($i=0; $i < 200; $i++) { 
+    do {
+    
         $game->getCurrentSet()->addPointToPlayerNum(randomPlayerNum());
+        // control des sets gagnants
         if($game->getCurrentSet()->getScore()->isWinner()) {
+            echo "<h3>Set win by ".$game->getCurrentSet()->getScore()->getWinner()->getName()."</h3><hr>";
+            // test nombre de sets
+            // if($game->isGameWin()) break;
+            // ajout d'un set
+            $game->addGameSet();
+            echo "<h2>Set : " . count($game->getSets()) . "</h2>";
+            // echo "<h2>Set ".count($game->getSets())."</h2>";
 
-            echo "Set win by ".$game->getCurrentSet()->getScore()->getWinner()->getName();
         }
-    }
+    } while (!$game->isGameWin());
+    // }
 
     dump($game);
     

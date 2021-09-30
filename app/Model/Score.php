@@ -17,8 +17,8 @@ class Score {
 
     public function isWinner(): bool
     {
-        if($this->points[0] >= 11 || $this->points[1] >= 11){
-            if(abs($this->points[0] - $this->points[1]) > 1){
+        if($this->points[0] >= Game::MIN_POINTS_FOR_WINNING || $this->points[1] >= Game::MIN_POINTS_FOR_WINNING){
+            if(abs($this->points[0] - $this->points[1]) > Game::GAP_POINTS -1){
                 return true;
             }
         }
