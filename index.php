@@ -36,10 +36,13 @@
     $game->affiche();
     
     // ajout des points
-    for ($i=0; $i < 11; $i++) { 
+    for ($i=0; $i < 22; $i++) { 
         $game->getCurrentSet()->addPointToPlayerNum(randomPlayerNum());
+        if($game->getCurrentSet()->getScore()->isWinner()) {
+
+            echo "Set win by ".$game->getCurrentSet()->getScore()->getWinner()->getName();
+        }
     }
-    // $game->getCurrentSet()->addPointToPlayerNum(randomPlayerNum());
 
     dump($game);
     

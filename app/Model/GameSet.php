@@ -7,11 +7,11 @@
         private Score $score;
         private string $id;
 
-        public function __construct(private string $GameId)
+        public function __construct(private array $players)
         {
 
             $this->id = uniqid("set-");
-            $this->score = new Score();    
+            $this->score = new Score($this->players);    
         }
      
         public function getId(): string
@@ -25,4 +25,7 @@
 
         }
 
+        public function getScore() {
+            return $this->score;
+        }
     }

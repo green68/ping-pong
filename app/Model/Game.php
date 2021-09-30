@@ -36,7 +36,7 @@ class Game
     }
 
     private function addGameSet() {
-        $this->gameSets[] = new GameSet($this->getId());
+        $this->gameSets[] = new GameSet($this->getPayers());
         $gameSetNumber = count($this->gameSets);
         echo "<br>Set {$gameSetNumber}<br>";
     }
@@ -65,6 +65,10 @@ class Game
     public function affiche(){
         echo "<h1>Game : {$this->getId()}</h1>";
         echo "<h2></h2>";
+    }
+
+    public function getPayers() {
+        return $this->players;
     }
 
 }
