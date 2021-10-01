@@ -38,7 +38,7 @@
                 return false;
             }
 
-            if(abs($this->getScore()->getPoints(0) - $this->getScore()->getPoints(1)) < Game::GAP_POINTS -1){
+            if(abs($this->getScore()->getPoints(0) - $this->getScore()->getPoints(1)) < Game::GAP_POINTS){
                 return false;
             }
             

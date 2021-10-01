@@ -27,6 +27,9 @@
 
     // démarrage match
     echo "<h1>Game : {$game->getId()}</h1>";
+    echo "Joueur 1: ". $game->getPlayers()[0]->getName()."<br>";
+    echo "Joueur 2: ". $game->getPlayers()[1]->getName()."<br>";
+
     $game->start();
     echo "<h2>Set : " . count($game->getSets()) . "</h2>";
     
