@@ -6,9 +6,9 @@ use Exception;
 
 class Game
 {
-    const MIN_POINTS_FOR_WINNING = 11;
-    const GAP_POINTS = 2;
-    const NUMBER_MIN_SET_WIN = 4;
+    const MIN_POINTS_FOR_WINNING = 11; //11
+    const GAP_POINTS = 2; //2
+    const MIN_SET_FOR_WIN = 3; //3
 
     private string $id;
     private array $players = array();
@@ -42,7 +42,6 @@ class Game
         if($this->isGameWin()) return;
 
         $this->gameSets[] = new GameSet($this->getPayers());
-        $gameSetNumber = count($this->gameSets);
     }
 
     public function addPlayer($player) {
@@ -72,20 +71,36 @@ class Game
 
     public function isGameWin():bool
     {
-        if(count($this->gameSets) < Game::NUMBER_MIN_SET_WIN) return false;
+        if(count($this->gameSets) < Game::MIN_SET_FOR_WIN) return false;
+        if($this->getWinner()) return true;
+        return false;
+    }
+
+    public function getWinner(): ?Player
+    {
         $setsWin = array();
         foreach($this->gameSets as $set) {
             if($set->getScore()->getWinner() !== null){
-                 $setsWin[] = $set->getScore()->getWinner()->getName();
+                $setsWin[] = $set->getScore()->getWinner()->getName();
             } 
         }
         if(
-            array_count_values($setsWin)[$this->players[0]->getName()] === Game::NUMBER_MIN_SET_WIN
-            || array_count_values($setsWin)[$this->players[1]->getName()] === Game::NUMBER_MIN_SET_WIN
+            in_array($this->players[0]->getName(), $setsWin) 
+            && array_count_values($setsWin)[$this->players[0]->getName()] === Game::MIN_SET_FOR_WIN
+            // || in_array($this->players[1]->getName(), $setsWin) 
+            // && array_count_values($setsWin)[$this->players[1]->getName()] === Game::MIN_SET_FOR_WIN
         ) {
-            return true;
+            return $this->players[0];
         }
-        return false;
+        if(
+            // in_array($this->players[0]->getName(), $setsWin) 
+            // && array_count_values($setsWin)[$this->players[0]->getName()] === Game::MIN_SET_FOR_WIN
+            in_array($this->players[1]->getName(), $setsWin) 
+            && array_count_values($setsWin)[$this->players[1]->getName()] === Game::MIN_SET_FOR_WIN
+        ) {
+            return $this->players[1];
+        }
+        return null;
     }
 
     public function getPayers() {
