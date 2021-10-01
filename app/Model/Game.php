@@ -80,21 +80,19 @@ class Game
     {
         $setsWin = array();
         foreach($this->gameSets as $set) {
-            if($set->getScore()->getWinner() !== null){
-                $setsWin[] = $set->getScore()->getWinner()->getName();
+            // if($set->getScore()->getWinner() !== null){
+            if($set->getWinner() !== null){
+                // $setsWin[] = $set->getScore()->getWinner()->getName();
+                $setsWin[] = $set->getWinner()->getName();
             } 
         }
         if(
             in_array($this->players[0]->getName(), $setsWin) 
             && array_count_values($setsWin)[$this->players[0]->getName()] === Game::MIN_SET_FOR_WIN
-            // || in_array($this->players[1]->getName(), $setsWin) 
-            // && array_count_values($setsWin)[$this->players[1]->getName()] === Game::MIN_SET_FOR_WIN
         ) {
             return $this->players[0];
         }
         if(
-            // in_array($this->players[0]->getName(), $setsWin) 
-            // && array_count_values($setsWin)[$this->players[0]->getName()] === Game::MIN_SET_FOR_WIN
             in_array($this->players[1]->getName(), $setsWin) 
             && array_count_values($setsWin)[$this->players[1]->getName()] === Game::MIN_SET_FOR_WIN
         ) {

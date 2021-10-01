@@ -36,18 +36,18 @@
     echo "<h2>Set : " . count($game->getSets()) . "</h2>";
     
     do {
-    
         $game->getCurrentSet()->addPointToPlayerNum(randomPlayerNum());
+        echo $game->getCurrentSet()->getScore()->getPoints(0)." - ".$game->getCurrentSet()->getScore()->getPoints(1)." / ";
         // control des sets gagnants
-        if($game->getCurrentSet()->getScore()->isWinner()) {
-            echo "<h3>Set gagné par ".$game->getCurrentSet()->getScore()->getWinner()->getName()."</h3><hr>";
+        if($game->getCurrentSet()->isWinner()) {
+            echo "<h3>Set gagné par ".$game->getCurrentSet()->getWinner()->getName()."</h3><hr>";
             // ajout d'un set?
             if(!$game->isGameWin()){
                 $game->addGameSet();
                 echo "<h2>Set : " . count($game->getSets()) . "</h2>";
             }
-
         }
+
     } while (!$game->isGameWin());
 
 
