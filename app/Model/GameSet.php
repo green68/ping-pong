@@ -9,7 +9,6 @@
 
         public function __construct(private array $players)
         {
-
             $this->id = uniqid("set-");
             $this->score = new Score($this->players);    
         }
@@ -25,7 +24,8 @@
 
         }
 
-        public function getScore() {
+        public function getScore(): Score
+        {
             return $this->score;
         }
 
@@ -44,6 +44,7 @@
             
             return true;
         }
+        
         public function getWinner(): ?Player
         {
             if ($this->isWinner()) {

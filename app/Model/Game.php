@@ -50,7 +50,6 @@ class Game
         }
 
         $this->players[] = $player;
-        $player->setPlaying($this->getId());
     }
 
     public function isNumberOfPlayers(): bool 

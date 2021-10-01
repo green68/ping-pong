@@ -5,7 +5,6 @@ namespace App\Model;
 class Player {
 
     private string $gameId = "";
-    private bool $playing = false;
 
     public function __construct(private string $name)
     {
@@ -25,14 +24,6 @@ class Player {
     public function isPlaying(): bool
     {
         return $this->getGameId() !== "" ;
-    }
-
-    public function setPlaying(string $gameId){
-        $this->playing = true;
-        $this->gameId = $gameId;
-    }
-    public function unsetPlaying(){
-        $this->playing = false;
     }
 
 }

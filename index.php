@@ -11,18 +11,13 @@
     const NUMBER_OF_PLAYERS = 2;
 
     $game = new Game(Game::MIN_SET_FOR_WIN, NUMBER_OF_PLAYERS);
-    // echo "création d'un match,";
-    // echo " id : ".$game->getId();
-
 
     try {
-        // instance joeur1 et affectation à un match
+        // instance joueur1 et joueur2, puis affectation à un match
         $playerOne = new Player("Eric");
         $playerTwo = new Player("Mathieu");
-        $playerThree = new Player("Saïd");
 
         $game->addPlayer($playerOne);
-        // instance joueur2 et affectation à un match
         $game->addPlayer($playerTwo);
         // instance joueur3 et tentative ajout à un match
         // $game->addPlayer($playerThree);
