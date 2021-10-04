@@ -15,7 +15,7 @@
     try {
         // instance joueur1 et joueur2, puis affectation à un match
         $playerOne = new Player("Eric");
-        $playerTwo = new Player("Mathieu");
+        $playerTwo = new Player("Kevin");
 
         $game->addPlayer($playerOne);
         $game->addPlayer($playerTwo);
@@ -27,8 +27,8 @@
 
     // démarrage match
     echo "<h1>Game : {$game->getId()}</h1>";
-    echo "Joueur 1: ". $game->getPlayers()[0]->getName()."<br>";
-    echo "Joueur 2: ". $game->getPlayers()[1]->getName()."<br>";
+    echo "<h2>Joueur 1: ". $game->getPlayers()[0]->getName()."<br>";
+    echo "Joueur 2: ". $game->getPlayers()[1]->getName()."</h2>";
 
     $game->start();
     echo "<h2>Set : " . count($game->getSets()) . "</h2>";
@@ -48,6 +48,11 @@
 
     } while (!$game->isGameWin());
 
-
-    echo "<h2>Jeu gagné par : ".$game->getWinner()->getName()."</h2>";
+    // recup nbre sets pour chaque joueur
+    $sets = array(0,0);
+    foreach ($game->getSets() as $set) {
+        $set->getWinner() === $playerOne ? $sets[0]++ : $sets[1]++;
+    } 
+    dump($sets);
+    echo "<h2>Jeu gagné par : ".$game->getWinner()->getName()." $sets[0] / $sets[1]</h2>";
     

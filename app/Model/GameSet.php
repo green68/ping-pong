@@ -4,6 +4,7 @@
 
     class GameSet
     {
+        private ?Player $winner = null;
         private Score $score;
         private string $id;
 
@@ -31,6 +32,8 @@
 
         public function isWinner(): bool
         {
+            if($this->winner) return true;
+
             if(
                 $this->getScore()->getPoints(0) < Game::MIN_POINTS_FOR_WINNING 
                 && $this->getScore()->getPoints(1) < Game::MIN_POINTS_FOR_WINNING
@@ -47,8 +50,11 @@
         
         public function getWinner(): ?Player
         {
+            if($this->winner) return $this->winner;
+
             if ($this->isWinner()) {
-                return $this->getScore()->getPoints(0) > $this->getScore()->getPoints(1) ? $this->players[0] : $this->players[1];
+                $this->winner = $this->getScore()->getPoints(0) > $this->getScore()->getPoints(1) ? $this->players[0] : $this->players[1];
+                return $this->winner;
             }
             return null;
         }
