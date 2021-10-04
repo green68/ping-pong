@@ -25,6 +25,18 @@ class GameSimulator {
 
     private function gameStart()
     {
+        ?>
+            <!DOCTYPE html>
+            <html lang="fr">
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Simulateur de parti de Ping-pong</title>
+            </head>
+            <body>
+                
+        <?php
         echo "<h1>Game : {$this->game->getId()}</h1>";
         echo "<h2>Joueur 1: ". $this->game->getPlayers()[0]->getName()."<br>";
         echo "Joueur 2: ". $this->game->getPlayers()[1]->getName()."</h2>";
@@ -61,5 +73,10 @@ class GameSimulator {
             $set->getWinner() === $this->players[0] ? $sets[0]++ : $sets[1]++;
         } 
         echo "<h2>Jeu gagné par ".$this->game->getWinner()->getName()." : $sets[0] / $sets[1]</h2>";
+        ?>
+                        </body>
+            </html>
+
+        <?php
     }
 }
