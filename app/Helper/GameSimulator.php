@@ -51,7 +51,7 @@ class GameSimulator {
     private function gamePlay(){
 
         do {
-            $this->game->getCurrentSet()->addPointToPlayerNum($this->randomPlayerNum());
+            $this->game->getCurrentSet()->getScore()->addPointToPlayer($this->randomPlayerNum());
             echo $this->game->getCurrentSet()->getScore()->getPoints(0)." - ".$this->game->getCurrentSet()->getScore()->getPoints(1)." / ";
             // control des sets gagnants
             if($this->game->getCurrentSet()->isWinner()) {

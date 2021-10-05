@@ -19,11 +19,11 @@
             return $this->id;
         }
 
-        public function addPointToPlayerNum(int $playerNumber)
-        {
-            $this->score->addPointToPlayer($playerNumber);
+        // public function addPointToPlayerNum(int $playerNumber):void
+        // {
+        //     $this->score->addPointToPlayer($playerNumber);
 
-        }
+        // }
 
         public function getScore(): Score
         {
