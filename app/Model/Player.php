@@ -21,9 +21,4 @@ class Player {
         return $this->gameId;
     }
 
-    public function isPlaying(): bool
-    {
-        return $this->getGameId() !== "" ;
-    }
-
 }
