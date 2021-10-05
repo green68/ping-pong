@@ -16,7 +16,7 @@ class Score
         $this->points[$playerNumber]++;
     }
 
-    public function getPoints(int $playerNumber)
+    public function getPoints(int $playerNumber): int
     {
         return $this->points[$playerNumber];
     }
