@@ -12,7 +12,7 @@ class GameSimulator {
 
     public function __construct(string $namePlayer1, string $namePlayer2)
     {
-        $this->game = new Game(Game::MIN_SET_FOR_WIN, 2);
+        $this->game = new Game(2);
         $this->players[] = new Player($namePlayer1);
         $this->players[] = new Player($namePlayer2);
         $this->game->addPlayer($this->players[0]);
@@ -41,7 +41,9 @@ class GameSimulator {
         echo $this->game->getPlayers()[0]->getName()." vs ";
         echo $this->game->getPlayers()[1]->getName()."</h1>";
         $this->game->start();
-        echo "<h2>Set : " . count($this->game->getSets()) . "</h2>";    }
+        $this->game->addGameSet();
+        echo "<h2>Set : " . count($this->game->getSets()) . "</h2>";
+    }
 
 
     private function randomPlayerNum() {

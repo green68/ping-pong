@@ -12,9 +12,9 @@ class Game
 
     private array $players = array();
     private array $gameSets = array();
+    private bool $started = false;
     
     public function __construct(
-        private int $numberOfGameSets, 
         private int $numberOfPlayers
     ) 
     {}
@@ -27,10 +27,20 @@ class Game
         if(!$this->isNumberOfPlayers()) {
             throw new Exception("démarrage impossible, nombre de joueurs incorrect");
         }
-        $this->addGameSet();
+        $this->started = true;
+        // todo : 
+        // set a boolean value?
+        // do not addGameSet?
+        // $this->addGameSet();
     }
 
-    public function addGameSet() {
+    public function addGameSet() : void
+    {
+        // todo : 
+        // check if match start? (boolean value)
+        if(!$this->started) {
+            throw new Exception("Ajout de set impossible, Match non démarré");
+        }
         if($this->isGameWin()) {
             throw new Exception("Ajout set impossible, Match terminé!");
         };
@@ -38,7 +48,8 @@ class Game
         $this->gameSets[] = new GameSet($this->getPlayers());
     }
 
-    public function addPlayer($player) {
+    public function addPlayer($player) : void
+    {
         if(count($this->players) == $this->numberOfPlayers) {
             throw new Exception("Ajout d'un nouveau joueur impossible");
         }
@@ -90,7 +101,8 @@ class Game
         return null;
     }
 
-    public function getPlayers() {
+    public function getPlayers(): array
+    {
         return $this->players;
     }
 
