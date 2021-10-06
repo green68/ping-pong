@@ -31,7 +31,9 @@ class Game
     }
 
     public function addGameSet() {
-        if($this->isGameWin()) return;
+        if($this->isGameWin()) {
+            throw new Exception("Ajout set impossible, Match terminé!");
+        };
 
         $this->gameSets[] = new GameSet($this->getPlayers());
     }
@@ -75,18 +77,14 @@ class Game
             } 
         }
 
-        if(
-            in_array($this->players[0]->getName(), $setsWin) 
-            && array_count_values($setsWin)[$this->players[0]->getName()] === Game::MIN_SET_FOR_WIN
-        ) {
-            return $this->players[0];
-        }
+        foreach($this->players as $player) {
+            if(
+                in_array($player->getName(), $setsWin) 
+                && array_count_values($setsWin)[$player->getName()] === Game::MIN_SET_FOR_WIN
+            ) {
+                return $player;
+            }
 
-        if(
-            in_array($this->players[1]->getName(), $setsWin) 
-            && array_count_values($setsWin)[$this->players[1]->getName()] === Game::MIN_SET_FOR_WIN
-        ) {
-            return $this->players[1];
         }
         
         return null;
