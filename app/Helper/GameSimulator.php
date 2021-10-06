@@ -37,11 +37,11 @@ class GameSimulator {
             <body>
                 
         <?php
-        echo "<h1>Game : {$this->game->getId()}</h1>";
-        echo "<h2>Joueur 1: ". $this->game->getPlayers()[0]->getName()."<br>";
-        echo "Joueur 2: ". $this->game->getPlayers()[1]->getName()."</h2>";
+        echo "<h1>Match : ";
+        echo $this->game->getPlayers()[0]->getName()." vs ";
+        echo $this->game->getPlayers()[1]->getName()."</h1>";
         $this->game->start();
-    }
+        echo "<h2>Set : " . count($this->game->getSets()) . "</h2>";    }
 
 
     private function randomPlayerNum() {
@@ -51,11 +51,11 @@ class GameSimulator {
     private function gamePlay(){
 
         do {
-            $this->game->getCurrentSet()->getScore()->addPointToPlayer($this->randomPlayerNum());
+            $this->game->getCurrentSet()->getScore()->addPoint($this->randomPlayerNum());
             echo $this->game->getCurrentSet()->getScore()->getPoints(0)." - ".$this->game->getCurrentSet()->getScore()->getPoints(1)." / ";
             // control des sets gagnants
             if($this->game->getCurrentSet()->isWinner()) {
-                echo "<h3>Set gagné par ".$this->game->getCurrentSet()->getWinner()->getName()."</h3><hr>";
+                echo "<h3>Set gagné par : ".$this->game->getCurrentSet()->getWinner()->getName()."</h3><hr>";
                 // ajout d'un set?
                 if(!$this->game->isGameWin()){
                     $this->game->addGameSet();
@@ -72,9 +72,9 @@ class GameSimulator {
         foreach ($this->game->getSets() as $set) {
             $set->getWinner() === $this->players[0] ? $sets[0]++ : $sets[1]++;
         } 
-        echo "<h2>Jeu gagné par ".$this->game->getWinner()->getName()." : $sets[0] / $sets[1]</h2>";
+        echo "<h2>Match gagné par : ".$this->game->getWinner()->getName()." ($sets[0] / $sets[1])</h2>";
         ?>
-                        </body>
+                </body>
             </html>
 
         <?php

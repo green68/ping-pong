@@ -11,7 +11,7 @@ class Score
     {
     }
 
-    public function addPointToPlayer(int $playerNumber)
+    public function addPoint(int $playerNumber)
     {
         $this->points[$playerNumber]++;
     }

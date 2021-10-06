@@ -10,7 +10,6 @@ class Game
     const GAP_POINTS = 2; //2
     const MIN_SET_FOR_WIN = 3; //3
 
-    private string $id;
     private array $players = array();
     private array $gameSets = array();
     
@@ -18,15 +17,8 @@ class Game
         private int $numberOfGameSets, 
         private int $numberOfPlayers
     ) 
-    {
-        $this->id = uniqid("game-");
-    }
+    {}
         
-    public function getId(): string
-    {
-        return $this->id;
-    }
-    
     public function start()
     {
         if(count($this->gameSets) !== 0){
@@ -71,8 +63,7 @@ class Game
     public function isGameWin():bool
     {
         if(count($this->gameSets) < Game::MIN_SET_FOR_WIN) return false;
-        if($this->getWinner()) return true;
-        return false;
+        return $this->getWinner() ? true: false;
     }
 
     public function getWinner(): ?Player
