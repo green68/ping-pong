@@ -1,0 +1,165 @@
+@startuml matchClass3
+' skinparam linetype polyline
+' skinparam linetype ortho
+
+class Person {
+    - firstName : string
+    - lastName : string
+    -- constructor --
+    + Person(string firstName, string lastName): void
+    ..
+    + getName(): string
+
+}
+
+class Player {
+    - captain : bool
+    -- constructor --
+    + Player(string firstName, string lastName): void
+    + isCaptain() : bool
+}
+
+class Referee {
+    -- constructor --
+    + Referee(string firstName, string lastName): void
+}
+note left : "Arbitre"
+
+class Team {
+    - name : string
+    - players : array
+    ' - captain: Player
+    -- constructor --
+    + Team(string name, int numberOfPlayers) : 
+    + getName() : string
+    + addPlayer(Player player)
+    + getPlayer(int number)
+    + getCaptain() : Player
+}
+
+Class Duo {
+    - players : array
+    + Duo()
+    + addPlayer(Player player)
+    + getPlayers() : array
+}
+
+class GameMatch {
+    - teams : array 
+    -- constructor --
+    + GameMatch()
+    + addTeam(Team team)
+    + getTeams() : ?array
+    + getWinner() : ?Team
+    ' + isWin() : bool
+}
+note left : "Match"
+
+rectangle Rencontre{
+
+    class Game {
+        + {static} MIN_POINTS_FOR_WINNING : int = 11
+        + {static} GAP_POINTS : int = 2
+        + {static} MIN_SET_FOR_WIN : int = 3
+        # sets[] : GameSet
+        # referee : Referee
+        # firstService: Player
+        '-- constructor --
+        ' + Game(int numberOfPlayers)
+        ..
+        + addGameSet() : void
+        + getCurrentSet() : GameSet
+        + getService() : Player
+        + getSets() : array
+        + getWinner() : ?Player|Duo
+        ' + isWin() :bool
+        ' + isNumberOfPlayers() : bool
+        + start() : void
+    }
+
+    class SimpleGame {
+        - players[] : Player
+        + SimpleGame(Referee referee)
+        + addPlayer(Player player) : void
+        + getPlayers() : array
+
+    }
+    ' note bottom : "Rencontre"
+
+    class DualGame {
+        - duos[] : array
+        + DualGame(Referee referee)
+        + addDuo(Duo duo)
+        + getDuos() : array
+    }
+}
+
+rectangle Sets {
+
+    class GameSet {
+        # score : Score
+        # winner : ?Player|Duo
+        # firstService: Player
+        ' - referee : Referee
+        ' -- constructor --
+        ' +GameSet(array players)
+        ..
+        + getService() : Player
+        + getScore(): Score
+        + getWinner(): ?Player|Duo
+        ' +isWinner(): bool
+    }
+    ' note top : externaliser getWinner?
+
+    class SimpleGameSet{
+        - players[] : array
+        -- constructor --
+        + SimpleGameSet(Player player1, Player player2, Referee referee)
+        ..
+        + getPlayers() : array
+    }
+    class DualGameSet {
+        - duos[] : array
+        -- constructor --
+        + DualGameSet(Duo duo1, Duo duo2, Referee referee)
+        ..
+        + getDuos() : array
+    }
+
+    class Score {
+        - points: array
+        -- constructor --
+        + Score()
+        ..
+        + addPoint(int index): void
+        + getPoints(): array
+    }
+}
+
+' Person <|-- Player
+' Person <|-- Referee
+Player "3" -o "1" Team 
+Team "2" --o "1" GameMatch : Participe
+GameMatch "1" --* "9" SimpleGame
+
+GameMatch "1" --* "1" DualGame
+Team "1" --* "1" Duo : Designe
+Duo "2" --o "1" DualGame : Participe
+Referee "1" --o "*" Game : Arbitre
+
+SimpleGame -|> Game
+Game <|- DualGame
+
+' Referee "1" --o "1" GameSet : Arbitre
+SimpleGameSet -|> GameSet
+GameSet <|- DualGameSet
+
+DualGame "1" *--- "3*" DualGameSet
+SimpleGame "1" *--- "3*" SimpleGameSet
+SimpleGameSet "1" --* "1" Score
+DualGameSet "1" --* "1" Score
+
+
+hide @unlinked
+
+@enduml

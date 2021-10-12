@@ -1,0 +1,57 @@
+@startuml classes
+
+class Player {
+    -name : string
+    -- constructor --
+    + Player(string name): void
+    ..
+    + getName(): string
+}
+
+class Game {
+    + MIN_POINTS_FOR_WINNING : int = 11
+    + GAP_POINTS : int = 2
+    + MIN_SET_FOR_WIN : int = 3
+    - Sets[] : GameSet
+    - Players[] : Player
+    -- constructor --
+    + Game(int numberOfPlayers)
+    ..
+    + addPlayer(Player player) : void
+    + addGameSet() : void
+    + getCurrentSet() : GameSet
+    + getSets() : array
+    + getPlayers() : array
+    + getWinner() : ?Player
+    + isGameWin() :bool
+    + isNumberOfPlayers() : bool
+    + start() : void
+}
+
+class GameSet {
+    -Score : Score
+    -Players[] : Player
+    -winner : ?Player
+    -- constructor --
+    +GameSet(array players)
+    ..
+    +getScore(): Score
+    +getWinner(): ?Player
+    +isWinner(): bool
+}
+
+class Score {
+    -points: array
+    -players: array
+    -- constructor --
+    +Score(array players)
+    ..
+    +addPoint(int playerNumber): void
+    +getPoints(int playerNumber): int
+}
+
+'Player "2"-*"1" Game
+Game "1"*--"2" Player
+Game "1"*--"3+" GameSet 
+GameSet "1"*--"1" Score
+@enduml
