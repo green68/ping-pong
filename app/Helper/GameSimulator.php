@@ -7,10 +7,14 @@ use App\Model\Player;
 
 class GameSimulator {
 
+    public static function simulate() {
+        new GameSimulator("Eric", "David");
+    }
+
     private Game $game;
     private array $players;
 
-    public function __construct(string $namePlayer1, string $namePlayer2)
+    private function __construct(string $namePlayer1, string $namePlayer2)
     {
         $this->game = new Game(2);
         $this->players[] = new Player($namePlayer1);
@@ -85,5 +89,3 @@ class GameSimulator {
         <?php
     }
 }
-
-// $gameSimulator = new GameSimulator("Eric", "David");

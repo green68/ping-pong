@@ -5,6 +5,5 @@
     
     use App\Helper\GameSimulator;
 
-    new GameSimulator("Eric", "David");
-
+    GameSimulator::simulate();
     
