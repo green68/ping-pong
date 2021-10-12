@@ -11,10 +11,18 @@
             "email": "eric.vercheval@hotmail.fr"
         }
     ],
-    "require":{
-
+    "scripts": {
+        "tests": [
+            "vendor/bin/phpunit tests"
+        ],
+        "tests:watch": [
+            "Composer\\Config::disableProcessTimeout",
+            "vendor/bin/phpunit-watcher watch tests"
+        ]
     },
     "require-dev": {
-        "symfony/var-dumper": "^5.3"
+        "symfony/var-dumper": "^5.3",
+        "phpunit/phpunit": "^9.5",
+        "spatie/phpunit-watcher": "^1.23"
     }
 }
