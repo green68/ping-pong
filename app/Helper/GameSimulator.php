@@ -59,13 +59,16 @@ class GameSimulator {
             if($this->game->getCurrentSet()->isWinner()) {
                 echo "<h3>Set gagné par : ".$this->game->getCurrentSet()->getWinner()->getName()."</h3><hr>";
                 // ajout d'un set?
-                if(!$this->game->isGameWin()){
+                // if(!$this->game->isGameWin()){
+                if(!$this->game->getWinner()){
                     $this->game->addGameSet();
                     echo "<h2>Set : " . count($this->game->getSets()) . "</h2>";
                 }
             }
     
-        } while (!$this->game->isGameWin());
+        } while (!$this->game->getWinner());
+
+        // $this->gameFinished();
     }
 
     private function gameFinished(){
@@ -82,3 +85,5 @@ class GameSimulator {
         <?php
     }
 }
+
+// $gameSimulator = new GameSimulator("Eric", "David");

@@ -5,6 +5,6 @@
     
     use App\Helper\GameSimulator;
 
-    $gameSimulator = new GameSimulator("Eric", "David");
+    new GameSimulator("Eric", "David");
 
     

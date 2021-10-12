@@ -15,7 +15,7 @@ class Game
     private bool $started = false;
     
     public function __construct(
-        private int $numberOfPlayers
+        private int $numberOfPlayers = 2
     ) 
     {}
         
@@ -28,10 +28,6 @@ class Game
             throw new Exception("démarrage impossible, nombre de joueurs incorrect");
         }
         $this->started = true;
-        // todo : 
-        // set a boolean value?
-        // do not addGameSet?
-        // $this->addGameSet();
     }
 
     public function addGameSet() : void
@@ -41,16 +37,16 @@ class Game
         if(!$this->started) {
             throw new Exception("Ajout de set impossible, Match non démarré");
         }
-        if($this->isGameWin()) {
+        if($this->getWinner()) {
             throw new Exception("Ajout set impossible, Match terminé!");
         };
 
         $this->gameSets[] = new GameSet($this->getPlayers());
     }
 
-    public function addPlayer($player) : void
+    public function addPlayer(Player $player) : void
     {
-        if(count($this->players) == $this->numberOfPlayers) {
+        if($this->isNumberOfPlayers()) {
             throw new Exception("Ajout d'un nouveau joueur impossible");
         }
 
@@ -63,7 +59,7 @@ class Game
     }
 
 
-    public function getCurrentSet(): GameSet
+    public function getCurrentSet(): GameSet|false
     {
         return end($this->gameSets);
     }
@@ -73,14 +69,10 @@ class Game
         return $this->gameSets;
     }
 
-    public function isGameWin():bool
-    {
-        if(count($this->gameSets) < Game::MIN_SET_FOR_WIN) return false;
-        return $this->getWinner() ? true: false;
-    }
-
     public function getWinner(): ?Player
     {
+        if(count($this->gameSets) < Game::MIN_SET_FOR_WIN) return null;
+        
         $setsWin = array();
         foreach($this->gameSets as $set) {
             if($set->getWinner() !== null){
