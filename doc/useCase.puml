@@ -2,15 +2,15 @@
 left to right direction
 
 skinparam actorStyle awesome
-"Utilisateur" as User
-package Match {
-    usecase "Définir les joueurs" as (Init)
+"Utilisateur\n(Arbitre)" as User
+package App {
+    usecase "Définir les joueurs" as (InitGame)
     usecase "Démarrer le match" as (StartGame)
     usecase "Démarrer un set" as (StartSet)
     usecase "Ajouter 1 point" as (AddPoint)
 }
 
-:User: --> (Init)
+:User: --> (InitGame)
 :User: --> (StartGame)
 :User: --> (StartSet)
 :User: --> (AddPoint)
